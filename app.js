@@ -19,7 +19,7 @@ app.set('view engine', 'handlebars');
 //rotas get
 // home
 app.get('/', (req, res) => 
-Post.findAll().then((posts)=>res.render('pages/teste',{posts:posts}))
+Post.findAll().then((posts)=>res.render('pages/home',{posts:posts}))
 )
 //formulario posts
 app.get('/post', (req, res) => res.render('pages/formPost'))
