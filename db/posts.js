@@ -1,23 +1,26 @@
 const Sequelize = require('sequelize');
 
-
 const sequelize = new Sequelize('posts', 'root', '123456', {
     host: 'localhost',
     dialect: 'mysql'
-  });
+});
 
-  const Post = sequelize.define('post', {
-    titulo:{
+const Post = sequelize.define('post', {
+    titulo: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    texto:{
+    texto: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
+    imagem: {
         type: Sequelize.TEXT,
         allowNull: false
     }
-  });
+});
 
-  //Post.sync({ force: true });
+//Post.sync({ force: true });
 
 
-  module.exports = Post
+module.exports = Post
