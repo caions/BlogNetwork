@@ -5,14 +5,22 @@
     <meta charset="UTF-8">
     <title>Site Network</title>
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
+    <link rel="stylesheet" href="public/css/home.css">
 </head>
 
-<body class="bg-secondary">
+<body class="bg-light">
 
     {{>navbar}}
     <div class="container mt-4">
         {{>msg}}
+    <div class="row">
+    <div class="col-8">
         {{{body}}}
+    </div>
+    <div class="col-4 bg-info">
+        {{{body}}}
+    </div>
+    </div>
     </div>
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/popper.js"></script>
