@@ -2,19 +2,40 @@
 const express = require('express')
 const app = express();
 const handlebars = require('express-handlebars')
+const bodyParser = require('body-parser')
+const Post = require('./db/posts')
 
 //config
 //estatic
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
+//bodyparser
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 //handlebars
-app.engine('handlebars', handlebars({defaultLayout:'main'}));
+app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-//rotas
+//rotas get
 
-app.get('/',(req,res)=>res.render('pages/teste'))
+app.get('/', (req, res) => 
+Post.findAll().then((posts)=>res.render('pages/teste',{posts:posts}))
+)
+app.get('/post', (req, res) => res.render('pages/formPost'))
+
+
+//rotas post
+app.post('/add', (req, res) => Post.create({
+    titulo: req.body.titulo,
+    texto: req.body.texto
+}).then(() =>
+    res.redirect('/'),
+    console.log('Post criado com sucesso'
+    )).catch((erro) =>
+        console.log('Falha ao criar o post' + erro))
+)
+
 
 //rotando o servidor
 const PORT = 8080;
-app.listen(PORT,() => console.log(`Servidor rodando na porta ${PORT}`))
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`))
