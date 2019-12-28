@@ -12,7 +12,7 @@ const sequelize = new Sequelize('posts', 'root', '123456', {
         allowNull: false
     },
     texto:{
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     }
   });

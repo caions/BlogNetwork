@@ -17,14 +17,17 @@ app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 //rotas get
-
+// home
 app.get('/', (req, res) => 
 Post.findAll().then((posts)=>res.render('pages/teste',{posts:posts}))
 )
+//formulario posts
 app.get('/post', (req, res) => res.render('pages/formPost'))
 
 
 //rotas post
+
+//create post
 app.post('/add', (req, res) => Post.create({
     titulo: req.body.titulo,
     texto: req.body.texto
@@ -34,6 +37,18 @@ app.post('/add', (req, res) => Post.create({
     )).catch((erro) =>
         console.log('Falha ao criar o post' + erro))
 )
+
+// delete post
+app.get('/delete/:id',(req,res)=>{
+    Post.destroy({
+        where: {
+          id: req.params.id
+        }
+      }).then(() => {
+        res.redirect('/'),
+        console.log("Done");
+      }).catch((erro) => res.send('Erro'+erro));
+})
 
 
 //rotando o servidor

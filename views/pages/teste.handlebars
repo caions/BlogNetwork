@@ -1,8 +1,13 @@
 {{#each posts}}
-<br>
-{{id}}
-{{titulo}}
-<br>
-{{texto}}
-<hr>
+<div class="d-flex justify-content-center">
+    <br>
+    <div class="card mt-3" style="width: 70rem;">
+        <div class="card-body">
+            <h3 class="card-title">{{titulo}}</h3>
+            {{texto}}
+            <br>
+            <a href="/delete/{{id}}"><button class="btn btn-danger mt-2">Deletar</button></a>
+        </div>
+    </div>
+</div>
 {{/each}}
