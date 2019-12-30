@@ -2,9 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Post = require('../db/posts')
 
-
 //static
-//estatic
 router.use(express.static('public'));
 router.use(express.static('node_modules'))
 

@@ -1,5 +1,4 @@
 // modulos
-const express = require('express')
 const app = require('./server/server')
 const handlebars = require('express-handlebars')
 const session = require('express-session')
