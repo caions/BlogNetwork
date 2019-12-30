@@ -1,6 +1,6 @@
 // modulos
 const express = require('express')
-const app = express();
+const app = require('./server/server')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const Post = require('./db/posts')
@@ -107,6 +107,3 @@ app.get('/delete/:id', (req, res) => {
 
 })
 
-//rotando o servidor
-const PORT = 8080;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`))
