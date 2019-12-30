@@ -1,7 +1,11 @@
+const bodyParser = require('body-parser')
 const express = require('express')
 const router = express.Router()
 const Post = require('../db/posts')
 
+//config bodyparser
+router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.json())
 
 //estatic
 router.use(express.static('public'));

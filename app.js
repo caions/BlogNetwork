@@ -2,7 +2,6 @@
 const express = require('express')
 const app = require('./server/server')
 const handlebars = require('express-handlebars')
-const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const user = require('./routes/user')
@@ -28,9 +27,6 @@ app.use((req, res, next) => {
 //rotas
 app.use('/',user)
 app.use('/admin',admin)
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
 
 //handlebars
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
