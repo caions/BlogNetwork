@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Site Network</title>
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/home.css">
@@ -11,13 +13,13 @@
 <body class="bg-light">
 
     {{>navbar}}
-    <div class="container mt-4">
+    <div class="container fluid">
         {{>msg}}
         <div class="row mb-5">
-            <div class="col-lg-8 ">
+            <div class="col-12 col-md-8 ">
                 {{{body}}}
             </div>
-            <div class="col-lg-4  bg-info mt-5">
+            <div class="col-12 col-md-4  bg-info mt-5">
                 {{>side_bar}}
             </div>
         </div>
@@ -25,7 +27,6 @@
     <script src="jquery/dist/jquery.js"></script>
     <script src="popper.js/dist/popper.js"></script>
     <script src="bootstrap/dist/js/bootstrap.js"></script>
-
 
 </body>
 
