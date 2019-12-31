@@ -13,18 +13,18 @@
     {{>navbar}}
     <div class="container mt-4">
         {{>msg}}
-    <div class="row mb-5">
-    <div class="col-8">
-        {{{body}}}
+        <div class="row mb-5">
+            <div class="col-lg-8 ">
+                {{{body}}}
+            </div>
+            <div class="col-lg-4  bg-info mt-5">
+                {{>side_bar}}
+            </div>
+        </div>
     </div>
-    <div class="col-4 bg-info mt-5">
-        {{>side_bar}}
-    </div>
-    </div>
-    </div>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/popper.js/dist/popper.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="popper.js/dist/popper.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
 
 
 </body>
