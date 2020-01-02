@@ -85,7 +85,7 @@ app.post('/upload',(req,res) =>{
                 res.redirect('/upload')
             }else{
                 req.flash('success_msg','Arquivo enviado!')
-                res.redirect('/upload'),
+                res.redirect('/upload')
             }
             
         }
