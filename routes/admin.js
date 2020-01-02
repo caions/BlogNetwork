@@ -79,7 +79,6 @@ router.get('/delete/:id', (req, res) => {
         req.flash('error_msg', 'Falha ao excluir o post, tente novamente!')
         res.send('Erro' + erro);
     })
-
 })
 
 module.exports = router
