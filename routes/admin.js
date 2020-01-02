@@ -25,19 +25,28 @@ router.post('/add', (req, res) => {
         erros.push({ texto: "Texto Invalido" })
     }
 
+    if (!req.body.descricao || req.body.descricao == undefined || req.body.descricao == null) {
+        erros.push({ texto: "Descricao Invalida" })
+    }
+
     if (req.body.titulo.length < 2) {
         erros.push({ texto: "Titulo muito curto" })
     }
 
+    if (req.body.descricao.length < 10 || req.body.descricao.length > 200 ) {
+        erros.push({ texto: "Descrição deve ter entre 10 a 180 caracteres" })
+    }
+
     if (req.body.texto.length < 10) {
         erros.push({ texto: "Texto muito curto" })
-    }
+    } 
 
     if (erros.length > 0) {
         res.render('pages/formPost', { erros: erros })
     } else {
         Post.create({
             titulo: req.body.titulo,
+            descricao: req.body.descricao,
             texto: req.body.texto,
             imagem: req.body.imagem        
         }).then(() => {

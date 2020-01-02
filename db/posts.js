@@ -10,6 +10,10 @@ const Post = sequelize.define('post', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    descricao:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     texto: {
         type: Sequelize.TEXT,
         allowNull: false
