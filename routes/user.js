@@ -27,7 +27,7 @@ router.get('/postagem/:id', (req, res) =>
             res.redirect('/')
         }
     }).catch((erro)=>{
-        res.send('Houve um erro interno')
+        res.send('Houve um erro interno'+erro)
         res.redirect('/')
     })
     

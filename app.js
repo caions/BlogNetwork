@@ -7,6 +7,7 @@ const user = require('./routes/user')
 const admin = require('./routes/admin')
 const multer = require('multer')
 const path = require('path')
+const Post = require('./db/posts')
 
 //config
 //session
@@ -59,38 +60,37 @@ function checkFileType(file,cb){
 }
 
 // rota upload
-
 app.get('/upload',(req,res)=> {
-    res.render('pages/formUpload')
+    Post.findAll().then((posts)=>{
+        res.render('pages/formUpload',{posts:posts})
+    }).catch()
 })
-/*
-app.post('/upload',(req,res) =>{
-    upload((req,res)=>{
-        console.log(req.file)
-        res.send('teste')
-    }).catch((erro)=>{
-        console.log('Deu ruim'+erro)
-    })
-})*/
 
 app.post('/upload',(req,res) =>{
     upload(req,res,(erro)=>{
         if(erro){
             req.flash('error_msg',erro.message)
-            console.log(erro)
             res.redirect('/upload')
         }else{
             if(req.file == undefined){
                 req.flash('error_msg','Nenhum arquivo selecionado!')
                 res.redirect('/upload')
             }else{
-                req.flash('success_msg','Arquivo enviado!')
-                res.redirect('/upload')
+                const url = req.file.path
+                const newUrl = url.replace('public',"")
+                Post.create({
+                    imagem: newUrl
+                }).then(()=>{
+                    req.flash('success_msg','Arquivo enviado!')
+                    res.redirect('/upload')
+                }).catch((erro)=>{
+                    console.log('Erro ao fazer o upload no db'+erro)
+                })  
             }
-            
         }
     })
 })
+
 
 //rotas
 app.use('/',user)
