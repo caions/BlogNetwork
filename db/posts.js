@@ -8,19 +8,19 @@ const sequelize = new Sequelize('posts', 'root', '123456', {
 const Post = sequelize.define('post', {
     titulo: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
     descricao:{
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
     },
     texto: {
         type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: false
     },
     imagem: {
         type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: false
     }
 });
 
