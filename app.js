@@ -28,14 +28,15 @@ app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg')
     res.locals.error_msg = req.flash('error_msg')
     res.locals.error = req.flash("error")
+    res.locals.user = req.user || null
     next()
 }
 )
 
 //rotas
-app.use('/',user)
-app.use('/admin',admin)
-app.use('/upload',upload)
+app.use('/', user)
+app.use('/admin', admin)
+app.use('/upload', upload)
 
 //handlebars
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));

@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const router = express.Router()
 const Post = require('../db/posts')
+const { eAdmin } = require('../helpers/eAdmin')
 
 //config bodyparser
 router.use(bodyParser.urlencoded({ extended: false }))
@@ -12,9 +13,9 @@ router.use(express.static('public'));
 router.use(express.static('node_modules'))
 
 //formulario posts
-router.get('/post', (req, res) => res.render('pages/formPost'))
+router.get('/post', eAdmin, (req, res) => res.render('pages/formPost'))
 
-router.post('/add', (req, res) => {
+router.post('/add', eAdmin, (req, res) => {
     var erros = []
 
     if (!req.body.titulo || req.body.titulo == undefined || req.body.titulo == null) {
@@ -33,13 +34,13 @@ router.post('/add', (req, res) => {
         erros.push({ texto: "Titulo muito curto" })
     }
 
-    if (req.body.descricao.length < 10 || req.body.descricao.length > 200 ) {
+    if (req.body.descricao.length < 10 || req.body.descricao.length > 200) {
         erros.push({ texto: "Descrição deve ter entre 10 a 180 caracteres" })
     }
 
     if (req.body.texto.length < 10) {
         erros.push({ texto: "Texto muito curto" })
-    } 
+    }
 
     if (erros.length > 0) {
         res.render('pages/formPost', { erros: erros })
@@ -48,7 +49,7 @@ router.post('/add', (req, res) => {
             titulo: req.body.titulo,
             descricao: req.body.descricao,
             texto: req.body.texto,
-            imagem: req.body.imagem        
+            imagem: req.body.imagem
         }).then(() => {
             req.flash("success_msg", "Post criado com sucesso")
             res.redirect('/')
@@ -66,7 +67,7 @@ router.post('/add', (req, res) => {
 )
 
 // delete post
-router.get('/delete/:id', (req, res) => {
+router.get('/delete/:id', eAdmin, (req, res) => {
     Post.destroy({
         where: {
             id: req.params.id

@@ -11,15 +11,15 @@
 </head>
 
 <body class="bg-light">
-   
+
 
     {{>navbar}}
     <div class="container fluid">
-    {{#if error}}
+        {{#if error}}
         <div class="alert alert-danger">{{error}}</div>
-    {{else}}
-    
-    {{/if}}
+        {{else}}
+
+        {{/if}}
         {{>msg}}
         <div class="row mb-5">
             <div class="col-12 col-md-8 ">

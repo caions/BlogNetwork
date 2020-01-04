@@ -3,6 +3,7 @@ const router = express.Router()
 const path = require('path')
 const multer = require('multer')
 const Upload = require('../db/upload')
+const {eAdmin} = require('../helpers/eAdmin')
 
 //estatic
 router.use(express.static('public'));
@@ -43,13 +44,13 @@ function checkFileType(file,cb){
 }
 
 // rota upload
-router.get('/',(req,res)=> {
+router.get('/',eAdmin,(req,res)=> {
     Upload.findAll().then((posts)=>{
         res.render('pages/formUpload',{posts:posts})
     }).catch()
 })
 
-router.post('/',(req,res) =>{
+router.post('/',eAdmin,(req,res) =>{
     upload(req,res,(erro)=>{
         if(erro){
             req.flash('error_msg',erro.message)
