@@ -1,9 +1,5 @@
 const Sequelize = require('sequelize');
-
-const sequelize = new Sequelize('posts', 'root', '123456', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
+const sequelize = require('./config')
 
 const Post = sequelize.define('post', {
     titulo: {
