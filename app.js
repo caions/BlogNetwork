@@ -9,6 +9,8 @@ const upload = require('./routes/upload')
 const multer = require('multer')
 const path = require('path')
 const Post = require('./db/posts')
+const passport = require('passport')
+require('./config/auth')(passport)
 
 //config
 //session
@@ -17,6 +19,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 //midllewares

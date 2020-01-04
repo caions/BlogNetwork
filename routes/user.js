@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const Post = require('../db/posts')
 const Usuario = require('../db/usuario')
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 
 //config bodyparser
 router.use(bodyParser.urlencoded({ extended: false }))
@@ -78,34 +79,24 @@ router.post('/registro', (req, res) => {
                 req.flash('error_msg', 'Já existe uma conta com esse email em nosso sistema')
                 res.redirect('/registro')
             } else {
+                var nome = req.body.nome;
+                var email = req.body.email;
+                var senha = req.body.senha
 
-                const novoUsuario = new Usuario({
-                    nome: req.body.nome,
-                    email: req.body.email,
-                    senha: req.body.senha
-                })
+                var salt = bcrypt.genSaltSync(10);
+                var hash = bcrypt.hashSync(senha, salt);
 
-                bcrypt.genSalt(10, (erro, salt) => {
-                    bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
-                        if (erro) {
-                            req.flash('error_msg', 'Houve um erro durante o salvamento do usuario')
-                            res.redirect('/registro')
-                        }
-
-                        novoUsuario.senha = hash
-                        Usuario.create({
-                            nome: novoUsuario.nome,
-                            email: novoUsuario.email,
-                            senha: novoUsuario.senha
-                        }).then(() => {
-                            req.flash('success_msg', 'Usuario criado com sucesso!')
-                            res.redirect('/')
-                        }).catch((erro) => {
-                            console.log(erro)
-                            req.flash('error_msg', 'Houve um erro ao criar o usuario, tente novamente')
-                            res.redirect('/registro')
-                        })
-                    })
+                Usuario.create({
+                    nome: nome,
+                    email: email,
+                    senha: hash
+                }).then(() => {
+                    req.flash('success_msg', 'Usuario criado com sucesso!')
+                    res.redirect('/')
+                }).catch((erro) => {
+                    console.log(erro)
+                    req.flash('error_msg', 'Houve um erro ao criar o usuario, tente novamente')
+                    res.redirect('/registro')
                 })
 
             }
@@ -115,6 +106,20 @@ router.post('/registro', (req, res) => {
         })
 
     }
+})
+
+//login
+router.get('/login', (req, res) => {
+    res.render('pages/formLogin')
+})
+
+router.post('/login', (req, res, next) => {
+
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: "/login",
+        failureFlash: true
+    })(req, res, next)
 })
 
 module.exports = router 
