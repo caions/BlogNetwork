@@ -8,18 +8,24 @@
 
 <div class="d-flex justify-content-center mt-5">
     <div class="card" style="width: 50rem" ;>
-        <div class="card-body">
-            <h2 class="card-title">Login</h2>
-            <form action="/login" method="POST">
-                <label for="Titulo">Email</label>
-                <input type="email" name="email" class="form-control">
-                <br>
-                <label for="Titulo">Senha</label>
-                <input type="password" name="senha" class="form-control">
-                <br>
-                <input type="submit" value="Logar" class="btn btn-success">
-                <a class="btn btn-warning" href="/">Cancelar</div></a>
-            </form>
-        </div>
-    </div>
+        {{#if user}}
+        <a class="btn btn-danger" href="/logout">Deslogar</div></a>
+    {{else}}
+    <div class="card-body">
+        <h2 class="card-title">Login</h2>
+        <form action="/login" method="POST">
+            <label for="Titulo">Email</label>
+            <input type="email" name="email" class="form-control">
+            <br>
+            <label for="Titulo">Senha</label>
+            <input type="password" name="senha" class="form-control">
+            <br>
+
+            <input type="submit" value="Logar" class="btn btn-success">
+            <a class="btn btn-warning" href="/">Cancelar
+    </div></a>
+    </form>
+    {{/if}}
+</div>
+</div>
 </div>

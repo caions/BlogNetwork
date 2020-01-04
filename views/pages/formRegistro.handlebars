@@ -8,6 +8,9 @@
 
 <div class="d-flex justify-content-center mt-5">
     <div class="card" style="width: 50rem" ;>
+        {{#if user}}
+        <a class="btn btn-danger" href="/logout">Deslogar</div></a>
+        {{else}}
         <div class="card-body">
             <h2 class="card-title">Cadastro</h2>
             <form action="/registro" method="POST">
@@ -28,4 +31,5 @@
             </form>
         </div>
     </div>
+    {{/if}}
 </div>

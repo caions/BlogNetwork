@@ -19,8 +19,10 @@ router.use('/postagem', express.static('public'));
 
 // home
 router.get('/', (req, res) =>
-    Post.findAll().then((posts) => res.render('pages/home', { posts: posts }))
-)
+    Post.findAll().then((posts) => {
+        res.render('pages/home', { posts: posts })
+    }
+))
 
 router.get('/postagem/:id', (req, res) =>
     Post.findOne({
