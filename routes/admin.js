@@ -86,7 +86,7 @@ router.get('/delete/:id', eAdmin, (req, res) => {
 })
 
 // edit post
-router.get('/edit/:id',(req,res)=>{
+router.get('/edit/:id',eAdmin,(req,res)=>{
     var id = req.params.id
     if(isNaN(id)){
         req.flash('error_msg','O post não existe')
@@ -108,7 +108,7 @@ router.get('/edit/:id',(req,res)=>{
     }
 })
 
-router.post('/edit',(req,res)=>{
+router.post('/edit',eAdmin,(req,res)=>{
     var id = req.body.id;
     Post.update({
         titulo: req.body.titulo,
