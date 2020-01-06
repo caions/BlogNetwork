@@ -14,8 +14,8 @@
                     <h3 class="card-title">{{titulo}}</h3>
                     {{descricao}}
                     <br>
-                    <a href="/admin/edit/{{id}}"><button class="btn btn-warning mt-2 btn-sm">Editar</button></a>
-                    <a href="/admin/delete/{{id}}"><button class="btn btn-danger mt-2 btn-sm">Deletar</button></a>
+                    <a href="/admin/edit/{{id}}"><button class="btn btn-warning mt-2 btn-sm" >Editar</button></a>
+                    <a href="/admin/delete/{{id}}"><button class="btn btn-danger mt-2 btn-sm" onclick="if (confirm('Deseja realmente excluir a postagem?')) return(1); return false">Deletar</button></a>
                     <a href="/postagem/{{id}}"><button class="btn btn-success mt-2 btn-sm">Ler mais</button></a>
                 </div>
             </div>
