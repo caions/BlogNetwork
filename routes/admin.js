@@ -15,8 +15,8 @@ router.use('/edit', express.static('node_modules'));
 router.use('/edit', express.static('public'));
 
 
-//formulario posts
-router.get('/post', eAdmin, (req, res) => res.render('pages/formPost'))
+//formulario cad posts
+router.get('/post', eAdmin, (req, res) => res.render('pages/formCadPost'))
 
 router.post('/add', eAdmin, (req, res) => {
     var erros = []
@@ -46,7 +46,7 @@ router.post('/add', eAdmin, (req, res) => {
     }
 
     if (erros.length > 0) {
-        res.render('pages/formPost', { erros: erros })
+        res.render('pages/formCadPost', { erros: erros })
     } else {
         Post.create({
             titulo: req.body.titulo,

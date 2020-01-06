@@ -13,15 +13,15 @@
             <form action="/admin/edit" method="POST">
                 <input type="hidden" name="id" value="{{post.id}}">
                 <label for="Titulo">Titulo</label>
-                <input type="text" name="titulo" class="form-control" value="{{post.titulo}}">
+                <input type="text" name="titulo" class="form-control" maxlength="57" value="{{post.titulo}}">
                 <br>
                 <label for="Descricao">Descricao:</label>
-                <textarea class="form-control" rows="2" name="descricao" style="resize: none;" >{{post.descricao}}</textarea>
+                <textarea class="form-control" rows="3" name="descricao" maxlength="180" style="resize: none;" >{{post.descricao}}</textarea>
                 <br>
                 <label for="Texto">Texto</label>
                 <textarea class="form-control" rows="10" name="texto">{{post.texto}}</textarea>
                 <br>
-                <input type="file" class="form-control" name="imagem">
+                <input type="file" class="form-control" name="imagem" required>
                 <br>
                 <input type="submit" value="Editar" class="btn btn-success">
                 <a class="btn btn-warning" href="/">Cancelar</div></a>
