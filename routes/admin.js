@@ -11,6 +11,9 @@ router.use(bodyParser.json())
 //estatic
 router.use(express.static('public'));
 router.use(express.static('node_modules'))
+router.use('/edit', express.static('node_modules'));
+router.use('/edit', express.static('public'));
+
 
 //formulario posts
 router.get('/post', eAdmin, (req, res) => res.render('pages/formPost'))
@@ -79,6 +82,49 @@ router.get('/delete/:id', eAdmin, (req, res) => {
     }).catch((erro) => {
         req.flash('error_msg', 'Falha ao excluir o post, tente novamente!')
         res.send('Erro' + erro);
+    })
+})
+
+// edit post
+router.get('/edit/:id',(req,res)=>{
+    var id = req.params.id
+    if(isNaN(id)){
+        req.flash('error_msg','O post não existe')
+        res.redirect("/");
+    }else{
+        Post.findByPk(id).then(post=>{
+            if(post != undefined){
+    
+                res.render('pages/formEditPost',{post:post})
+    
+            }else{
+                req.flash('error_msg','O post não existe')
+                res.redirect('/')
+            }
+            }).catch((erro)=>{
+                req.flash("error_msg", "Falha ao editar o Post")
+                res.redirect('/')
+        })
+    }
+})
+
+router.post('/edit',(req,res)=>{
+    var id = req.body.id;
+    Post.update({
+        titulo: req.body.titulo,
+        descricao: req.body.descricao,
+        texto: req.body.texto,
+        imagem: req.body.imagem
+    },{
+        where:{
+            id: id
+        }
+    }).then(()=>{
+        req.flash('success_msg','Post editado com sucesso')
+        res.redirect('/')
+    }).catch((erro)=>{
+        req.flash('error_msg','Falha ao editar o post')
+        res.redirect('/')
     })
 })
 
