@@ -11,6 +11,4 @@ const sequelize = new Sequelize('heroku_a27bb316a5627a4', 'b82e7955e08fa8', 'ea9
   dialect: 'mysql'
 });
 
-
-
 module.exports = sequelize
