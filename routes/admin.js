@@ -71,19 +71,17 @@ router.post('/add', eAdmin, (req, res) => {
 
 // delete post
 router.get('/delete/:id', eAdmin, (req, res) => {
-    Post.destroy({
-        where: {
-            id: req.params.id
-        }
-    }).then(() => {
-        req.flash('success_msg', 'Post deletado com sucesso!')
-        res.redirect('/'),
-            console.log("Done");
-    }).catch((erro) => {
-        req.flash('error_msg', 'Falha ao excluir o post, tente novamente!')
-        res.send('Erro' + erro);
-    })
-})
+    let id = req.params.id;
+    Post.findByPk(id).then(post => {
+        post.destroy().then(() => {
+            req.flash('success_msg', 'Post deletado com sucesso!')
+            res.redirect('/'),
+                console.log("Done");
+        }).catch((erro) => {
+            req.flash('error_msg', 'Falha ao excluir o post, tente novamente!')
+            res.send('Erro' + erro);
+        })
+    })})
 
 // edit post
 router.get('/edit/:id',eAdmin,(req,res)=>{
