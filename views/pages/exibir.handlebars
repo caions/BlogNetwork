@@ -1,0 +1,13 @@
+{{#each posts}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            {{id}}
+            <img src="{{url}}" alt="imagem" class="img-fluid">
+            <a href="/image/delete/{{id}}"><button class="btn btn-danger">deletar</button></a>
+        </div>
+    </div>
+</div>
+
+{{/each}}

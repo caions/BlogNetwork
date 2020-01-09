@@ -1,4 +1,7 @@
+require('dotenv').config()
+
 // modulos
+const express = require('express')
 const app = require('./server/server')
 const handlebars = require('express-handlebars')
 const session = require('express-session')
@@ -7,6 +10,7 @@ const user = require('./routes/user')
 const admin = require('./routes/admin')
 const upload = require('./routes/upload')
 const passport = require('passport')
+const path = require('path')
 require('./config/auth')(passport)
 
 //config
@@ -19,6 +23,10 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+app.use(express.json())
+app.use(require('./routes/upload'))
+app.use(express.urlencoded({ extended: true }))
+app.use('/files',express.static(path.resolve(__dirname,'../tmp/uploads')))
 
 //midllewares
 app.use((req, res, next) => {

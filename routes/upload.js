@@ -1,78 +1,53 @@
+const router = require('express').Router()
 const express = require('express')
-const router = express.Router()
-const path = require('path')
 const multer = require('multer')
+const multerConfig = require('../config/multer')
 const Upload = require('../db/upload')
-const {eAdmin} = require('../helpers/eAdmin')
+
 
 //estatic
-router.use(express.static('public'));
-router.use(express.static('node_modules'))
+router.use('/', express.static('node_modules'));
+router.use('/', express.static('tmp'));
 
-
-//set storage Engine
-const storage = multer.diskStorage({
-    destination: './public/uploads/',
-    filename: function(req,file,cb){
-        cb(null,file.fieldname + '-' +Date.now() + path.extname(file.originalname))
-    }
-});
-
-//init Upload
-const upload = multer({
-    storage:storage,
-    limits:{fileSize: 1000000},
-    fileFilter: function(req,file,cb){
-        checkFileType(file,cb);
-    }
-}).single('myImage');
-
-//Check file type
-function checkFileType(file,cb){
-    // Allowwed extenssions
-    const filetypes = /jpeg|jpg|png/;
-    // Check extenssion
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
-    // Check mime
-    const mimetype = filetypes.test(file.mimetype)
-
-    if(mimetype && extname){
-        return cb(null,true)
-    }else{
-        cb('Erro: Somente imagens!')
-    }
-}
-
-// rota upload
-router.get('/',eAdmin,(req,res)=> {
-    Upload.findAll().then((posts)=>{
-        res.render('pages/formUpload',{posts:posts})
-    }).catch()
+// cadastrar imagens
+router.get('/posts', async (req, res) => {
+    res.render('pages/formUpload')
+    
 })
 
-router.post('/',eAdmin,(req,res) =>{
-    upload(req,res,(erro)=>{
-        if(erro){
-            req.flash('error_msg',erro.message)
-            res.redirect('/upload')
-        }else{
-            if(req.file == undefined){
-                req.flash('error_msg','Nenhum arquivo selecionado!')
-                res.redirect('/upload')
-            }else{
-                const url = req.file.path
-                const newUrl = url.replace('public',"")
-                Upload.create({
-                    imagem: newUrl
-                }).then(()=>{
-                    req.flash('success_msg','Arquivo enviado!')
-                    res.redirect('/upload')
-                }).catch((erro)=>{
-                    console.log('Erro ao fazer o upload no db'+erro)
-                })  
-            }
-        }
+router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
+    const { originalname: name, size, key, location: url = "" } = req.file; //desestruturação 
+    Upload.create({
+        name,
+        size,
+        key,
+        url
+    }).then(()=>{
+        res.redirect('/exibir')
+    })
+
+})
+
+//deletar posts
+router.get('/image/delete/:id', (req, res) => {
+    let id = req.params.id;
+    Upload.findByPk(id).then(post => {
+        post.destroy().then(() => {
+            res.redirect('/exibir')
+        })
+    }).catch(err => {
+
     })
 })
+
+//exibir imagens
+router.get('/exibir',(req,res)=>{
+    Upload.findAll().then((posts)=>{
+        console.log(posts)
+        res.render('pages/exibir',{posts:posts})    
+    })
+})
+
+
 
 module.exports = router
