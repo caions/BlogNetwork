@@ -5,6 +5,7 @@ const Post = require('../db/posts')
 const Usuario = require('../db/usuario')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const Upload = require('../db/upload')
 
 //config bodyparser
 router.use(bodyParser.urlencoded({ extended: false }))

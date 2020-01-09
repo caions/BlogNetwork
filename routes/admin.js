@@ -3,6 +3,9 @@ const express = require('express')
 const router = express.Router()
 const Post = require('../db/posts')
 const { eAdmin } = require('../helpers/eAdmin')
+const multer = require('multer')
+const multerConfig = require('../config/multer')
+const Upload = require('../db/upload')
 
 //config bodyparser
 router.use(bodyParser.urlencoded({ extended: false }))
@@ -16,9 +19,9 @@ router.use('/edit', express.static('public'));
 
 
 //formulario cad posts
-router.get('/post', eAdmin, (req, res) => res.render('pages/formCadPost'))
+router.get('/post',  (req, res) => res.render('pages/formCadPost'))
 
-router.post('/add', eAdmin, (req, res) => {
+router.post('/add',  (req, res) => {
     var erros = []
 
     if (!req.body.titulo || req.body.titulo == undefined || req.body.titulo == null) {
@@ -123,6 +126,40 @@ router.post('/edit',eAdmin,(req,res)=>{
     }).catch((erro)=>{
         req.flash('error_msg','Falha ao editar o post')
         res.redirect('/')
+    })
+})
+
+// cadastrar imagens
+router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
+    var erros = []
+
+    if (!req.file || req.file == undefined || req.file == null) {
+        erros.push({ texto: "Selecione uma imagem" })
+    }
+
+    if (erros.length > 0) {
+        res.render('pages/formCadPost', { erros: erros })
+    } else{
+    const { originalname: name, size, key, location: url = "" } = req.file; //desestruturação
+    Upload.create({
+        name,
+        size,
+        key,
+        url
+    }).then((imagem)=>{
+        console.log(imagem)
+        req.flash('success_msg','Imagem cadastrada com sucesso')
+        res.redirect('/admin/post')
+    }).catch((erro)=>{
+        res.redirect('/post')
+    })}
+    
+})
+// exibir
+router.get('/exibir',(req,res)=>{
+    Upload.findAll().then((posts)=>{
+        console.log(posts)
+        res.render('pages/exibir',{posts:posts})    
     })
 })
 

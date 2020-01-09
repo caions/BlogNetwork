@@ -1,4 +1,4 @@
-const router = require('express').Router()
+/*const router = require('express').Router()
 const express = require('express')
 const multer = require('multer')
 const multerConfig = require('../config/multer')
@@ -25,7 +25,6 @@ router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
     }).then(()=>{
         res.redirect('/exibir')
     })
-
 })
 
 //deletar posts
@@ -48,6 +47,4 @@ router.get('/exibir',(req,res)=>{
     })
 })
 
-
-
-module.exports = router
+module.exports = router*/
