@@ -28,7 +28,6 @@ router.get('/',(req,res)=>{
     res.end()
 })*/
 
-
 router.get('/', (req, res) => {
     Post.findAll({ raw:true }).then((post) => {
         Upload.findAll({ raw:true}).then((imagem) => {

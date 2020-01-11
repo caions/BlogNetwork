@@ -6,8 +6,8 @@ const sequelize = new Sequelize('blogNetwork', 'root', '123456', {
     dialect: 'mysql'
 });*/
 
-const sequelize = new Sequelize('heroku_9b1c68a01410f74', 'bdd2280da2e082', '9623cd32', {
-  host: 'us-cdbr-iron-east-05.cleardb.net',
+const sequelize = new Sequelize('myq4eompg0hr4xrj', 'flv4ons388k5kdk6', 'p3bfe7bqk4dhkjtw', {
+  host: 'o61qijqeuqnj9chh.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   dialect: 'mysql'
 });
 

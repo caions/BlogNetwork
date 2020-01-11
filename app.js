@@ -39,9 +39,14 @@ app.use((req, res, next) => {
 }
 )
 
+
+
 //rotas
 app.use('/', user)
 app.use('/admin', admin)
+app.use((req, res) => {
+    res.status(404).render('pages/error404')
+})
 //app.use('/upload', upload)
 
 //handlebars
