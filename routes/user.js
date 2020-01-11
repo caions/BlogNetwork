@@ -13,17 +13,34 @@ router.use(bodyParser.json())
 
 //static
 router.use(express.static('public'));
+router.use(express.static('tmp'));
 router.use(express.static('node_modules'))
 router.use('/postagem', express.static('node_modules'));
 router.use('/postagem', express.static('public'));
 
 
 // home
-router.get('/', (req, res) =>
-    Post.findAll().then((posts) => {
-        res.render('pages/home', { posts: posts })
-    }
-))
+/*
+router.get('/',(req,res)=>{
+    Post.findOne({raw:true}).then((posts)=>{
+        console.log(posts.id)
+    }).catch((erro)=>console.log('Deu ruim:'+erro))
+    res.end()
+})*/
+
+
+router.get('/', (req, res) => {
+    Post.findAll({ raw:true }).then((post) => {
+        Upload.findAll({ raw:true}).then((imagem) => {
+           res.render('pages/home',{post:post,imagem:imagem})
+        }).catch(erro => {
+            console.log('Deu ruim ' + erro)
+            res.end()
+        })
+
+    })
+})
+
 
 router.get('/postagem/:id', (req, res) =>
     Post.findOne({

@@ -19,9 +19,9 @@ router.use('/edit', express.static('public'));
 
 
 //formulario cad posts
-router.get('/post',  (req, res) => res.render('pages/formCadPost'))
+router.get('/post',eAdmin,  (req, res) => res.render('pages/formCadPost'))
 
-router.post('/add',  (req, res) => {
+router.post('/add',eAdmin,  (req, res) => {
     var erros = []
 
     if (!req.body.titulo || req.body.titulo == undefined || req.body.titulo == null) {
@@ -73,7 +73,7 @@ router.post('/add',  (req, res) => {
 )
 
 // delete post
-router.get('/delete/:id', eAdmin, (req, res) => {
+router.get('/delete/:id',eAdmin, (req, res) => {
     let id = req.params.id;
     Post.findByPk(id).then(post => {
         post.destroy().then(() => {
@@ -113,6 +113,7 @@ router.post('/edit',eAdmin,(req,res)=>{
     var id = req.body.id;
     Post.update({
         titulo: req.body.titulo,
+        id: req.body.id,
         descricao: req.body.descricao,
         texto: req.body.texto,
         imagem: req.body.imagem
@@ -130,7 +131,7 @@ router.post('/edit',eAdmin,(req,res)=>{
 })
 
 // cadastrar imagens
-router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
+router.post('/upload',eAdmin, multer(multerConfig).single('file'), (req, res) => {
     var erros = []
 
     if (!req.file || req.file == undefined || req.file == null) {
@@ -147,7 +148,6 @@ router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
         key,
         url
     }).then((imagem)=>{
-        console.log(imagem)
         req.flash('success_msg','Imagem cadastrada com sucesso')
         res.redirect('/admin/post')
     }).catch((erro)=>{
@@ -155,11 +155,15 @@ router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
     })}
     
 })
-// exibir
-router.get('/exibir',(req,res)=>{
-    Upload.findAll().then((posts)=>{
-        console.log(posts)
-        res.render('pages/exibir',{posts:posts})    
+
+//deletar imagem
+router.get('/image/delete/:id',eAdmin, (req, res) => {
+    let id = req.params.id;
+    Upload.findByPk(id).then(post => {
+        post.destroy().then(() => {
+            res.redirect('/')
+        })
+    }).catch(err => {
     })
 })
 
