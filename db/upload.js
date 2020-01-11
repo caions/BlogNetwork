@@ -4,11 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const {promisify} = require('util')
 const s3 = new aws.S3()
-
-const sequelize = new Sequelize('uploadrocket', 'root', '123456', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
+const sequelize = require('./config')
 
 const Upload = sequelize.define('upload', {
     name: {
