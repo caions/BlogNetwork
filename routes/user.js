@@ -1,11 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
-const Post = require('../db/posts')
-const Usuario = require('../db/usuario')
+const Model = require('../db/index')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-const Upload = require('../db/upload')
 
 //config bodyparser
 router.use(bodyParser.urlencoded({ extended: false }))
@@ -27,10 +25,10 @@ router.get('/',(req,res)=>{
     }).catch((erro)=>console.log('Deu ruim:'+erro))
     res.end()
 })*/
-
+/*
 router.get('/', (req, res) => {
-    Post.findAll({ raw:true }).then((post) => {
-        Upload.findAll({ raw:true}).then((imagem) => {
+    Model.Post.findAll({ raw:true }).then((post) => {
+        Model.Upload.findAll({ raw:true}).then((imagem) => {
            res.render('pages/home',{post:post,imagem:imagem})
         }).catch(erro => {
             console.log('Deu ruim ' + erro)
@@ -38,17 +36,36 @@ router.get('/', (req, res) => {
         })
 
     })
+})*/
+
+router.get('/', (req, res) => {
+    Model.Upload.findAll({
+        attributes: ['url'],
+        include: [{
+            model: Model.Post,
+            required: true
+            , attributes: ['id', 'titulo', 'descricao'],
+        }]
+    }).then(posts => {
+        res.render('pages/home', { posts: posts })
+    });
 })
 
 
 router.get('/postagem/:id', (req, res) =>
-    Post.findOne({
+    Model.Upload.findOne({
         where: {
             id: req.params.id
-        }
-    }).then((postagem) => {
-        if (postagem) {
-            res.render('pages/postagem', { postagem: postagem })
+        },
+        attributes: ['id','url'],
+        include: [{
+            model: Model.Post,
+            required: true
+            , attributes: ['id', 'titulo', 'descricao'],
+        }]
+    }).then((posts) => {
+        if (posts) {
+            res.render('pages/postagem', { posts: posts })
         } else {
             req.flash("error_msg", "Esta postagem não existe")
             res.redirect('/')
@@ -89,7 +106,7 @@ router.post('/registro', (req, res) => {
         res.render('pages/formRegistro', { erros: erros })
     } else {
 
-        Usuario.findOne({
+        Model.Usuario.findOne({
             where: {
                 email: req.body.email
             }
@@ -105,7 +122,7 @@ router.post('/registro', (req, res) => {
                 var salt = bcrypt.genSaltSync(10);
                 var hash = bcrypt.hashSync(senha, salt);
 
-                Usuario.create({
+                Model.Usuario.create({
                     nome: nome,
                     email: email,
                     senha: hash,

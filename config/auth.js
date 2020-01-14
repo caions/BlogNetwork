@@ -3,13 +3,13 @@ const Sequelize = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 //model de usuario
-const Usuario = require('../db/usuario')
+const Model = require('../db/index')
 
 module.exports = function(passport){
 
     passport.use(new localStrategy({usernameField: 'email',passwordField:'senha'},(email,senha,done) => {
 
-        Usuario.findOne({
+        Model.Usuario.findOne({
             where:{
                 email:email
             }

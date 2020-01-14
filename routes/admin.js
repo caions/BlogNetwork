@@ -1,11 +1,11 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const router = express.Router()
-const Post = require('../db/posts')
+const Model = require('../db/index')
 const { eAdmin } = require('../helpers/eAdmin')
 const multer = require('multer')
 const multerConfig = require('../config/multer')
-const Upload = require('../db/upload')
+
 
 //config bodyparser
 router.use(bodyParser.urlencoded({ extended: false }))
@@ -51,11 +51,12 @@ router.post('/add',eAdmin,  (req, res) => {
     if (erros.length > 0) {
         res.render('pages/formCadPost', { erros: erros })
     } else {
-        Post.create({
+        Model.Post.create({
             titulo: req.body.titulo,
             descricao: req.body.descricao,
             texto: req.body.texto,
-            imagem: req.body.imagem
+            imagem: req.body.imagem,
+            fk_imagem: req.body.fk_imagem
         }).then(() => {
             req.flash("success_msg", "Post criado com sucesso")
             res.redirect('/')
@@ -69,14 +70,13 @@ router.post('/add',eAdmin,  (req, res) => {
         )
     }
 }
-
 )
 
 // delete post
 router.get('/delete/:id',eAdmin, (req, res) => {
     let id = req.params.id;
-    Post.findByPk(id).then(post => {
-        post.destroy().then(() => {
+    Model.Post.findByPk(id).then(post => {
+        Model.Post.destroy({where:{id:id}}).then(() => {
             req.flash('success_msg', 'Post deletado com sucesso!')
             res.redirect('/'),
                 console.log("Done");
@@ -86,6 +86,7 @@ router.get('/delete/:id',eAdmin, (req, res) => {
         })
     })})
 
+
 // edit post
 router.get('/edit/:id',eAdmin,(req,res)=>{
     var id = req.params.id
@@ -93,7 +94,7 @@ router.get('/edit/:id',eAdmin,(req,res)=>{
         req.flash('error_msg','O post não existe')
         res.redirect("/");
     }else{
-        Post.findByPk(id).then(post=>{
+        Model.Post.findByPk(id).then(post=>{
             if(post != undefined){
     
                 res.render('pages/formEditPost',{post:post})
@@ -111,12 +112,13 @@ router.get('/edit/:id',eAdmin,(req,res)=>{
 
 router.post('/edit',eAdmin,(req,res)=>{
     var id = req.body.id;
-    Post.update({
+    Model.Post.update({
         titulo: req.body.titulo,
         id: req.body.id,
         descricao: req.body.descricao,
         texto: req.body.texto,
-        imagem: req.body.imagem
+        imagem: req.body.imagem,
+        fk_imagem: req.body.fk_imagem
     },{
         where:{
             id: id
@@ -131,6 +133,22 @@ router.post('/edit',eAdmin,(req,res)=>{
 })
 
 // cadastrar imagens
+router.get('/imagem',eAdmin,(req,res)=>{
+    Model.Upload.findAll({
+        attributes: ['id','url'],
+        include: [{
+            model: Model.Post,
+            required: true
+            , attributes: ['id', 'titulo', 'descricao'],
+        }]
+    }).then(posts => {
+        res.render('pages/formImagem', { posts: posts })
+    });
+})
+
+
+
+
 router.post('/upload',eAdmin, multer(multerConfig).single('file'), (req, res) => {
     var erros = []
 
@@ -141,27 +159,27 @@ router.post('/upload',eAdmin, multer(multerConfig).single('file'), (req, res) =>
     if (erros.length > 0) {
         res.render('pages/formCadPost', { erros: erros })
     } else{
-    const { originalname: name, size, key, location: url = "" } = req.file; //desestruturação
-    Upload.create({
-        name,
+    const { originalname: nome, size, key, location: url = "" } = req.file; //desestruturação
+    Model.Upload.create({
+        nome,
         size,
         key,
         url
     }).then((imagem)=>{
         req.flash('success_msg','Imagem cadastrada com sucesso')
-        res.redirect('/admin/post')
+        res.redirect('/admin/imagem')
     }).catch((erro)=>{
-        res.redirect('/post')
+        res.redirect('/admin/imagem')
     })}
     
 })
 
 //deletar imagem
-router.get('/image/delete/:id',eAdmin, (req, res) => {
+router.get('/imagem/delete/:id',eAdmin, (req, res) => {
     let id = req.params.id;
-    Upload.findByPk(id).then(post => {
-        post.destroy().then(() => {
-            res.redirect('/')
+    Model.Upload.findByPk(id).then(post => {
+        post.destroy({where:{id:id}}).then(() => {
+            res.redirect('/imagem')
         })
     }).catch(err => {
     })

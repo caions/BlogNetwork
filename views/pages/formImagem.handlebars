@@ -1,0 +1,20 @@
+<h2>Upload Images</h2>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" class="form-control"><br>
+    <button type="submit" name="" class="btn btn-success">Upload</button>
+</form>
+<hr>
+{{#each posts}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h4>Imagem post: {{post.titulo}}</h4>
+             Id:{{id}}
+            <img src="{{url}}" alt="imagem" class="img-fluid" style="width:100px;height:70px;" ><br>
+            <a href="/imagem/delete/{{id}}"><button class="btn btn-danger btn-sm">deletar</button></a>
+        </div>
+    </div>
+</div>
+
+{{/each}}
