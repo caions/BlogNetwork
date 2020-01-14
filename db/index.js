@@ -24,12 +24,12 @@ dialect: 'mysql'
 const Post = PostModel(sequelize, Sequelize);
 const Usuario = UsuarioModel(sequelize, Sequelize);
 const Upload = UploadModel(sequelize, Sequelize);
-
+/*
 Upload.beforeCreate(user => {
   if (!user.dataValues.url) {
       user.dataValues.url = `${process.env.APP_URL}/files/${user.dataValues.key}`
   }
-})
+})*/
 
 Upload.beforeDestroy(user => {
 if(process.env.STORAGE_TYPE === 's3'){

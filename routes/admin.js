@@ -132,6 +132,11 @@ router.post('/edit',eAdmin,(req,res)=>{
     })
 })
 
+
+
+//IMAGENS
+
+
 // cadastrar imagens
 router.get('/imagem',eAdmin,(req,res)=>{
     Model.Upload.findAll({
@@ -145,9 +150,6 @@ router.get('/imagem',eAdmin,(req,res)=>{
         res.render('pages/formImagem', { posts: posts })
     });
 })
-
-
-
 
 router.post('/upload',eAdmin, multer(multerConfig).single('file'), (req, res) => {
     var erros = []
