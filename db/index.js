@@ -16,8 +16,8 @@ const sequelize = new Sequelize('blogNetwork', 'root', '123456', {
 });*/ 
 
 // JawsDB
-const sequelize = new Sequelize('myq4eompg0hr4xrj', 'flv4ons388k5kdk6', 'p3bfe7bqk4dhkjtw', {
-host: 'o61qijqeuqnj9chh.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+const sequelize = new Sequelize(process.env.JAWSDB_DATABASE_NAME, process.env.JAWSDB_USERNAME, process.env.JAWSDB_PASS, {
+host: process.env.JAWSDB_HOST,
 dialect: 'mysql'
 });
 
@@ -40,17 +40,6 @@ if(process.env.STORAGE_TYPE === 's3'){
 Upload.hasOne(Post, {
   foreignKey: 'fk_imagem'
 });
-/*
-Upload.findAll({
-  attributes: ['url'],
-  include: [{
-    model: Post,
-    required: true
-   ,attributes: ['id','titulo'],}]
-}).then(posts => {
-  console.log("All users:", JSON.stringify(posts, null, 4));
-});
-*/
 
 module.exports = {
   sequelize,

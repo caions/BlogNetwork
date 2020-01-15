@@ -163,11 +163,6 @@ router.post('/upload',  multer(multerConfig).single('file'), (req, res) => {
         res.render('pages/formCadPost', { erros: erros })
     } else {
         const { originalname: nome, size, key, location: url = "" } = req.file; //desestruturação
-        Model.Upload.beforeCreate(user => {
-            if (!user.dataValues.url) {
-                user.dataValues.url = `${process.env.APP_URL}/files/${user.dataValues.key}`
-            }
-          })
         Model.Upload.create({
             nome,
             size,
