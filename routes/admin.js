@@ -19,9 +19,9 @@ router.use('/edit', express.static('public'));
 
 
 //formulario cad posts
-router.get('/post',eAdmin,  (req, res) => res.render('pages/formCadPost'))
+router.get('/post', eAdmin, (req, res) => res.render('pages/formCadPost'))
 
-router.post('/add',eAdmin,  (req, res) => {
+router.post('/add', eAdmin, (req, res) => {
     var erros = []
 
     if (!req.body.titulo || req.body.titulo == undefined || req.body.titulo == null) {
@@ -73,10 +73,10 @@ router.post('/add',eAdmin,  (req, res) => {
 )
 
 // delete post
-router.get('/delete/:id',eAdmin, (req, res) => {
+router.get('/delete/:id', eAdmin, (req, res) => {
     let id = req.params.id;
     Model.Post.findByPk(id).then(post => {
-        Model.Post.destroy({where:{id:id}}).then(() => {
+        Model.Post.destroy({ where: { id: id } }).then(() => {
             req.flash('success_msg', 'Post deletado com sucesso!')
             res.redirect('/'),
                 console.log("Done");
@@ -84,33 +84,34 @@ router.get('/delete/:id',eAdmin, (req, res) => {
             req.flash('error_msg', 'Falha ao excluir o post, tente novamente!')
             res.send('Erro' + erro);
         })
-    })})
+    })
+})
 
 
 // edit post
-router.get('/edit/:id',eAdmin,(req,res)=>{
+router.get('/edit/:id', eAdmin, (req, res) => {
     var id = req.params.id
-    if(isNaN(id)){
-        req.flash('error_msg','O post não existe')
+    if (isNaN(id)) {
+        req.flash('error_msg', 'O post não existe')
         res.redirect("/");
-    }else{
-        Model.Post.findByPk(id).then(post=>{
-            if(post != undefined){
-    
-                res.render('pages/formEditPost',{post:post})
-    
-            }else{
-                req.flash('error_msg','O post não existe')
+    } else {
+        Model.Post.findByPk(id).then(post => {
+            if (post != undefined) {
+
+                res.render('pages/formEditPost', { post: post })
+
+            } else {
+                req.flash('error_msg', 'O post não existe')
                 res.redirect('/')
             }
-            }).catch((erro)=>{
-                req.flash("error_msg", "Falha ao editar o Post")
-                res.redirect('/')
+        }).catch((erro) => {
+            req.flash("error_msg", "Falha ao editar o Post")
+            res.redirect('/')
         })
     }
 })
 
-router.post('/edit',eAdmin,(req,res)=>{
+router.post('/edit', eAdmin, (req, res) => {
     var id = req.body.id;
     Model.Post.update({
         titulo: req.body.titulo,
@@ -119,15 +120,15 @@ router.post('/edit',eAdmin,(req,res)=>{
         texto: req.body.texto,
         imagem: req.body.imagem,
         fk_imagem: req.body.fk_imagem
-    },{
-        where:{
+    }, {
+        where: {
             id: id
         }
-    }).then(()=>{
-        req.flash('success_msg','Post editado com sucesso')
+    }).then(() => {
+        req.flash('success_msg', 'Post editado com sucesso')
         res.redirect('/')
-    }).catch((erro)=>{
-        req.flash('error_msg','Falha ao editar o post')
+    }).catch((erro) => {
+        req.flash('error_msg', 'Falha ao editar o post')
         res.redirect('/')
     })
 })
@@ -138,9 +139,9 @@ router.post('/edit',eAdmin,(req,res)=>{
 
 
 // cadastrar imagens
-router.get('/imagem',eAdmin,(req,res)=>{
+router.get('/imagem',  (req, res) => {
     Model.Upload.findAll({
-        attributes: ['id','url'],
+        attributes: ['id', 'url'],
         include: [{
             model: Model.Post,
             required: true
@@ -151,7 +152,7 @@ router.get('/imagem',eAdmin,(req,res)=>{
     });
 })
 
-router.post('/upload',eAdmin, multer(multerConfig).single('file'), (req, res) => {
+router.post('/upload',  multer(multerConfig).single('file'), (req, res) => {
     var erros = []
 
     if (!req.file || req.file == undefined || req.file == null) {
@@ -160,27 +161,28 @@ router.post('/upload',eAdmin, multer(multerConfig).single('file'), (req, res) =>
 
     if (erros.length > 0) {
         res.render('pages/formCadPost', { erros: erros })
-    } else{
-    const { originalname: nome, size, key, location: url = "" } = req.file; //desestruturação
-    Model.Upload.create({
-        nome,
-        size,
-        key,
-        url
-    }).then((imagem)=>{
-        req.flash('success_msg','Imagem cadastrada com sucesso')
-        res.redirect('/admin/imagem')
-    }).catch((erro)=>{
-        res.redirect('/admin/imagem')
-    })}
-    
+    } else {
+        const { originalname: nome, size, key, location: url = "" } = req.file; //desestruturação
+        Model.Upload.create({
+            nome,
+            size,
+            key,
+            url
+        }).then((imagem) => {
+            req.flash('success_msg', 'Imagem cadastrada com sucesso')
+            res.redirect('/admin/imagem')
+        }).catch((erro) => {
+            res.redirect('/admin/imagem')
+        })
+    }
+
 })
 
 //deletar imagem
-router.get('/imagem/delete/:id',eAdmin, (req, res) => {
+router.get('/imagem/delete/:id', eAdmin, (req, res) => {
     let id = req.params.id;
     Model.Upload.findByPk(id).then(post => {
-        post.destroy({where:{id:id}}).then(() => {
+        post.destroy({ where: { id: id } }).then(() => {
             res.redirect('/imagem')
         })
     }).catch(err => {

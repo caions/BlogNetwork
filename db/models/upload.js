@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   });
-
+  Upload.beforeCreate(user => {
+    if (!user.dataValues.url) {
+        user.dataValues.url = `${process.env.APP_URL}/files/${user.dataValues.key}`
+    }
+  })
   return Upload;
 };
+
