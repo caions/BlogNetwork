@@ -4,15 +4,13 @@
     <button type="submit" name="" class="btn btn-success">Upload</button>
 </form>
 <hr>
-{{#each posts}}
+{{#each imagem}}
 
 <div class="container">
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-6">
-            <h4>Imagem post: {{post.titulo}}</h4>
-             Id:{{id}}
-            <img src="{{url}}" alt="imagem" class="img-fluid" style="width:100px;height:70px;" ><br>
-            <a href="/imagem/delete/{{id}}"><button class="btn btn-danger btn-sm">deletar</button></a>
+            <img src="{{url}}" alt="imagem" class="img-fluid" style="width:100px;height:70px;" >
+            <a href="/imagem/delete/{{id}}"><button class="btn btn-danger btn-sm">Deletar Fk {{id}}</button></a>
         </div>
     </div>
 </div>

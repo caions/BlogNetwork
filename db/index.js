@@ -9,11 +9,6 @@ const fs = require('fs')
 const path = require('path')
 const {promisify} = require('util')
 const s3 = new aws.S3()
-/*
-const sequelize = new Sequelize('blogNetwork', 'root', '123456', {
-  host: 'localhost',
-  dialect: 'mysql'
-});*/ 
 
 // JawsDB
 const sequelize = new Sequelize(process.env.JAWSDB_DATABASE_NAME, process.env.JAWSDB_USERNAME, process.env.JAWSDB_PASS, {

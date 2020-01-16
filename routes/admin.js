@@ -18,6 +18,7 @@ router.use('/edit', express.static('node_modules'));
 router.use('/edit', express.static('public'));
 
 
+
 //formulario cad posts
 router.get('/post', eAdmin, (req, res) => res.render('pages/formCadPost'))
 
@@ -140,17 +141,12 @@ router.post('/edit', eAdmin, (req, res) => {
 
 // cadastrar imagens
 router.get('/imagem',  (req, res) => {
-    Model.Upload.findAll({
-        attributes: ['id', 'url'],
-        include: [{
-            model: Model.Post,
-            required: true
-            , attributes: ['id', 'titulo', 'descricao'],
-        }]
-    }).then(posts => {
-        res.render('pages/formImagem', { posts: posts })
-    });
+    Model.Upload.findAll({raw:true}).then((imagem)=>{
+        res.render('pages/formImagem',{imagem:imagem})
+    })
 })
+
+
 
 router.post('/upload',  multer(multerConfig).single('file'), (req, res) => {
     var erros = []
@@ -179,7 +175,7 @@ router.post('/upload',  multer(multerConfig).single('file'), (req, res) => {
 })
 
 //deletar imagem
-router.get('/imagem/delete/:id', eAdmin, (req, res) => {
+router.get('/imagem/delete/:id',  (req, res) => {
     let id = req.params.id;
     Model.Upload.findByPk(id).then(post => {
         post.destroy({ where: { id: id } }).then(() => {

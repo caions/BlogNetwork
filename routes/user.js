@@ -16,28 +16,6 @@ router.use(express.static('node_modules'))
 router.use('/postagem', express.static('node_modules'));
 router.use('/postagem', express.static('public'));
 
-
-// home
-/*
-router.get('/',(req,res)=>{
-    Post.findOne({raw:true}).then((posts)=>{
-        console.log(posts.id)
-    }).catch((erro)=>console.log('Deu ruim:'+erro))
-    res.end()
-})*/
-/*
-router.get('/', (req, res) => {
-    Model.Post.findAll({ raw:true }).then((post) => {
-        Model.Upload.findAll({ raw:true}).then((imagem) => {
-           res.render('pages/home',{post:post,imagem:imagem})
-        }).catch(erro => {
-            console.log('Deu ruim ' + erro)
-            res.end()
-        })
-
-    })
-})*/
-
 router.get('/', (req, res) => {
     Model.Upload.findAll({
         attributes: ['url'],
