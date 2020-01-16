@@ -140,15 +140,15 @@ router.post('/edit', eAdmin, (req, res) => {
 
 
 // cadastrar imagens
-router.get('/imagem',  (req, res) => {
-    Model.Upload.findAll({raw:true}).then((imagem)=>{
-        res.render('pages/formImagem',{imagem:imagem})
+router.get('/imagem', (req, res) => {
+    Model.Upload.findAll({ raw: true }).then((imagem) => {
+        res.render('pages/formImagem', { imagem: imagem })
     })
 })
 
 
 
-router.post('/upload',  multer(multerConfig).single('file'), (req, res) => {
+router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
     var erros = []
 
     if (!req.file || req.file == undefined || req.file == null) {
@@ -175,7 +175,7 @@ router.post('/upload',  multer(multerConfig).single('file'), (req, res) => {
 })
 
 //deletar imagem
-router.get('/imagem/delete/:id',  (req, res) => {
+router.get('/imagem/delete/:id', (req, res) => {
     let id = req.params.id;
     Model.Upload.findByPk(id).then(post => {
         post.destroy({ where: { id: id } }).then(() => {

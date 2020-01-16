@@ -8,7 +8,6 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const user = require('./routes/user')
 const admin = require('./routes/admin')
-//const upload = require('./routes/upload')
 const passport = require('passport')
 const path = require('path')
 require('./config/auth')(passport)
@@ -24,10 +23,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(express.json())
-//app.use(require('./routes/upload'))
 app.use(require('./routes/admin'))
 app.use(express.urlencoded({ extended: true }))
-app.use('/files',express.static(path.resolve(__dirname,'../tmp/uploads')))
+app.use('/files', express.static(path.resolve(__dirname, '../tmp/uploads')))
 
 //midllewares
 app.use((req, res, next) => {
@@ -39,16 +37,12 @@ app.use((req, res, next) => {
 }
 )
 
-
-
 //rotas
 app.use('/', user)
 app.use('/admin', admin)
-app.use((req, res) => {
-    res.status(404).render('pages/error404')
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/css/error404.html'));
 })
-//app.use('/upload', upload)
-
 //handlebars
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');

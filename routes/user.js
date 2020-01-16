@@ -35,7 +35,7 @@ router.get('/postagem/:id', (req, res) =>
         where: {
             id: req.params.id
         },
-        attributes: ['id','url'],
+        attributes: ['id', 'url'],
         include: [{
             model: Model.Post,
             required: true
