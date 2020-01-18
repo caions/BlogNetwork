@@ -1,11 +1,18 @@
 {{#each posts}}
 
 <div class="container">
-    <div class="row">
-        <div class="col-6">
-            {{id}}
-            <img src="{{url}}" alt="imagem" class="img-fluid">
-            <a href="/image/delete/{{id}}"><button class="btn btn-danger">deletar</button></a>
+    <div class="row mt-3">
+        <div class="col-3 ">
+            <div class="card">
+                <div class="card-body">
+                    <p>Id: {{id}}</p>
+                    <p>Titulo:{{titulo}}</p>
+                    <p>Fk: {{fk_imagem}}</p>
+                    <a href="/admin/edit/{{id}}"><button class="btn btn-warning mt-2 btn-sm">Editar</button></a>
+                    <a href="/admin/delete/{{id}}"><button class="btn btn-danger mt-2 btn-sm" onclick="if (confirm('Deseja realmente excluir a postagem?')) return(1); return false">Deletar</button></a>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
