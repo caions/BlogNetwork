@@ -12,8 +12,8 @@ router.use(bodyParser.json())
 //static
 router.use(express.static('public'));
 router.use(express.static('tmp'));
-router.use(express.static('node_modules'))
-router.use('/postagem', express.static('node_modules'));
+//router.use(express.static('node_modules'))
+//router.use('/postagem', express.static('node_modules'));
 router.use('/postagem', express.static('public'));
 
 router.get('/', (req, res) => {
