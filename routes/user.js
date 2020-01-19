@@ -39,7 +39,7 @@ router.get('/postagem/:id', (req, res) =>
         include: [{
             model: Model.Post,
             required: true
-            , attributes: ['id', 'titulo', 'descricao'],
+            , attributes: ['id', 'titulo', 'texto'],
         }]
     }).then((posts) => {
         if (posts) {
