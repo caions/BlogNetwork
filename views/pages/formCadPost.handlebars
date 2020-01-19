@@ -19,7 +19,7 @@
                     maxlength="180"></textarea>
                 <br>
                 <label for="Texto">Texto</label>
-                <textarea class="form-control" rows="10" name="texto"></textarea>
+                <textarea class="form-control" rows="10" name="texto" id="article"></textarea>
                 <br>
                 <label for="Texto">Fk_imagem</label>
                 <input type="number" name="fk_imagem" class="form-control">
@@ -29,7 +29,18 @@
         </div></a>
         </form>
     </div>
-
+</div>
 </div>
 
-</div>
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+tinymce.init({
+        language: 'pt_BR',
+        selector: '#article',
+        plugins: [
+            'advlist autolin link image lists print preview hr searchreplace worcount fullscreen insertdatetime media save table paste emoticons'
+        ]
+      });
+</script>
+
+

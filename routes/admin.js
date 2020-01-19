@@ -26,9 +26,9 @@ router.get('/List', (req, res) => {
 })
 
 //formulario cad posts
-router.get('/post',eAdmin, (req, res) => res.render('pages/formCadPost'))
+router.get('/post', (req, res) => res.render('pages/formCadPost'))
 
-router.post('/add', eAdmin,(req, res) => {
+router.post('/add',(req, res) => {
     var erros = []
 
     if (!req.body.titulo || req.body.titulo == undefined || req.body.titulo == null) {
@@ -80,7 +80,7 @@ router.post('/add', eAdmin,(req, res) => {
 )
 
 // delete post
-router.get('/delete/:id', eAdmin,(req, res) => {
+router.get('/delete/:id',(req, res) => {
     let id = req.params.id;
     Model.Post.findByPk(id).then(post => {
         Model.Post.destroy({ where: { id: id } }).then(() => {
@@ -95,7 +95,7 @@ router.get('/delete/:id', eAdmin,(req, res) => {
 
 
 // edit post
-router.get('/edit/:id', eAdmin,(req, res) => {
+router.get('/edit/:id',(req, res) => {
     var id = req.params.id
     if (isNaN(id)) {
         req.flash('error_msg', 'O post não existe')
@@ -117,7 +117,7 @@ router.get('/edit/:id', eAdmin,(req, res) => {
     }
 })
 
-router.post('/edit', eAdmin,(req, res) => {
+router.post('/edit',(req, res) => {
     var id = req.body.id;
     Model.Post.update({
         titulo: req.body.titulo,
