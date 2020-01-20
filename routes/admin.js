@@ -17,6 +17,20 @@ router.use(express.static('public'));
 //router.use('/edit', express.static('node_modules'));
 router.use('/edit', express.static('public'));
 
+//home
+router.get('/admin', (req, res) => {
+    Model.Upload.findAll({
+        attributes: ['url'],
+        include: [{
+            model: Model.Post,
+            required: true
+            , attributes: ['id', 'titulo', 'descricao'],
+        }]
+    }).then(posts => {
+        res.render('pages/adminHome', { posts: posts })
+    });
+})
+
 router.get('/List', (req, res) => {
     Model.Post.findAll({
         attributes: ['id','titulo','fk_imagem']   

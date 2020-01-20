@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
             , attributes: ['id', 'titulo', 'descricao'],
         }]
     }).then(posts => {
-        res.render('pages/home', { posts: posts })
+        res.render('pages/userHome', { posts: posts })
     });
 })
 
