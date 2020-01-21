@@ -1,20 +1,21 @@
-<input class="btn btn-success mt-5 btn-sm" type='button' value='Voltar' onclick='history.go(-1)' />
+<ul style="list-style: none; display:inline-flex" class="pal1">
+    <li><a class="nav-link"href="/admin">Home</a></li>
+    <li><a class="nav-link" href="/admin/post">Novo Post</a></li>
+    <li><a class="nav-link" href="/admin/imagem">Listar Imagens</a></li>
+</ul>
+<br>
 {{#each posts}}
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-3 ">
-            <div class="card">
-                <div class="card-body">
-                    <p>Id: {{id}}</p>
-                    <p>Titulo:{{titulo}}</p>
-                    <p>Fk: {{fk_imagem}}</p>
-                    <a href="/admin/edit/{{id}}"><button class="btn btn-warning mt-2 btn-sm">Editar</button></a>
-                    <a href="/admin/delete/{{id}}"><button class="btn btn-danger mt-2 btn-sm" onclick="if (confirm('Deseja realmente excluir a postagem?')) return(1); return false">Deletar</button></a>
-                </div>
 
-            </div>
-        </div>
+<div class="card d-inline-flex" style="width: 165px;height: 240px;">
+    <div class="card-body">
+        <h5 class="card-title">Id: {{id}} FK: {{fk_imagem}}</h5>
+
+        <p>Titulo:{{titulo}}</p>
+        <a href="/admin/edit/{{id}}"><button class="btn btn-warning mt-2 btn-sm">Editar</button></a>
+        <a href="/admin/delete/{{id}}"><button class="btn btn-danger mt-2 btn-sm"
+                onclick="if (confirm('Deseja realmente excluir a postagem?')) return(1); return false">Deletar</button></a>
     </div>
+
 </div>
 
 {{/each}}

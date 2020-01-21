@@ -185,9 +185,9 @@ router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
             url
         }).then((imagem) => {
             req.flash('success_msg', 'Imagem cadastrada com sucesso')
-            res.redirect('/admin/imagem')
+            res.redirect('/admin/post')
         }).catch((erro) => {
-            res.redirect('/admin/imagem')
+            res.redirect('/admin/post')
         })
     }
 

@@ -1,20 +1,20 @@
-<h2>Upload Images</h2>
-<input class="btn btn-success mt-5 btn-sm" type='button' value='Voltar' onclick='history.go(-1)' />
-
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" class="form-control"><br>
-    <button type="submit" name="" class="btn btn-success">Upload</button>
-</form>
+<ul style="list-style: none; display:inline-flex" class="pal1">
+    <li><a class="nav-link"href="/admin">Home</a></li>
+    <li><a class="nav-link" href="/admin/post">Novo Post</a></li>
+    <li><a class="nav-link" href="/admin/list">Listar Posts</a></li>
+</ul>
+<h2>Listar Images</h2>
 <hr>
+
 {{#each imagem}}
 
-<div class="container">
-    <div class="row mt-2">
-        <div class="col-6">
-            <img src="{{url}}" alt="imagem" class="img-fluid" style="width:100px;height:70px;" >
-            <a href="/imagem/delete/{{id}}"><button class="btn btn-danger btn-sm">Deletar Fk {{id}}</button></a>
-        </div>
-    </div>
+<div class="card d-inline-block">
+
+        <img src="{{url}}" alt="imagem" class="img-fluid mb-1" style="width:100px;height:70px;"><br>
+        <a href="/imagem/delete/{{id}}"><button class="btn btn-danger btn-sm">Deletar Fk {{id}}</button></a>
+
 </div>
+
+
 
 {{/each}}

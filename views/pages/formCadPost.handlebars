@@ -1,12 +1,18 @@
 {{#each erros}}
-
 <div class="alert alert-danger">{{texto}}</div>
-
 {{else}}
-
 {{/each}}
+<ul style="list-style: none; display:inline-flex" class="pal1">
+    <li><a class="nav-link"href="/admin">Home</a></li>
+    <li><a class="nav-link" href="/admin/imagem">Listar Imagens</a></li>
+    <li><a class="nav-link" href="/admin/list">Listar Posts</a></li>
+</ul>
 
-<input class="btn btn-success mt-5 btn-sm" type='button' value='Voltar' onclick='history.go(-1)' />
+<h2>Cadastrar imagem</h2>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" class="form-control"><br>
+    <button type="submit" name="" class="btn btn-success">Upload</button>
+</form>
 
 
 <div class="d-flex justify-content-center mt-5">
@@ -28,7 +34,7 @@
                 <input type="number" name="fk_imagem" class="form-control">
                 <br>
                 <input type="submit" value="Postar" class="btn btn-success">
-                <a class="btn btn-warning" href="/">Cancelar
+                <a class="btn btn-warning" href="/admin">Cancelar
         </div></a>
         </form>
     </div>
@@ -37,13 +43,11 @@
 
 <script src="/tinymce/tinymce.min.js"></script>
 <script>
-tinymce.init({
+    tinymce.init({
         language: 'pt_BR',
         selector: '#article',
         plugins: [
             'advlist autolin link image lists print preview hr searchreplace worcount fullscreen insertdatetime media save table paste emoticons'
         ]
-      });
+    });
 </script>
-
-

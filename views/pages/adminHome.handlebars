@@ -1,7 +1,10 @@
+<ul style="list-style: none; display:inline-flex" class="pal1">
+    <li><a class="nav-link" href="/admin/post">Novo Post</a></li>
+    <li><a class="nav-link" href="/admin/imagem">Cadastrar Imagem</a></li>
+    <li><a class="nav-link" href="/admin/list">Listar Posts</a></li>
+</ul>
 
-        <a class="nav-link" href="/admin/post">Novo Post</a>
-        <a class="nav-link" href="/admin/imagem">Cadastrar Imagem</a>
-        <a class="nav-link" href="/admin/list">Listar Posts</a>
+
 
 {{#each posts}}
 
@@ -19,7 +22,8 @@
                     {{post.descricao}}
                     <a href="/postagem/{{post.id}}">Ler mais</a>
                     <a href="/admin/edit/{{post.id}}"><button class="btn btn-warning mt-2 btn-sm">Editar</button></a>
-                    <a href="/admin/delete/{{post.id}}"><button class="btn btn-danger mt-2 btn-sm"onclick="if (confirm('Deseja realmente excluir a postagem?')) return(1); return false">Deletar</button></a>
+                    <a href="/admin/delete/{{post.id}}"><button class="btn btn-danger mt-2 btn-sm"
+                            onclick="if (confirm('Deseja realmente excluir a postagem?')) return(1); return false">Deletar</button></a>
                 </div>
             </div>
         </div>
@@ -31,5 +35,3 @@
 <h5>Nenhuma postagem cadastrada...</h5>
 
 {{/each}}
-
-     
