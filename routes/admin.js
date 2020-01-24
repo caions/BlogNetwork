@@ -13,7 +13,7 @@ router.use(bodyParser.json())
 
 //estatic
 router.use(express.static('public'));
-//router.use(express.static('node_modules'))
+router.use(express.static('node_modules'))
 //router.use('/edit', express.static('node_modules'));
 router.use('/edit', express.static('public'));
 
