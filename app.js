@@ -3,7 +3,7 @@ require('dotenv').config()
 // modulos
 const express = require('express')
 const app = require('./server/server')
-const handlebars = require('express-handlebars')
+const hbs = require('express-hbs')
 const session = require('express-session')
 const flash = require('connect-flash')
 const user = require('./routes/user')
@@ -43,6 +43,15 @@ app.use('/admin', admin)
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname + '/public/css/error404.html'));
 })
-//handlebars
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
+//hbs
+//app.engine('hbs', hbs({ defaultLayout: 'main' }));
+app.set('view engine', 'hbs');
+
+// configure the view engine 
+app.set('views', path.join(__dirname,'/views'));
+
+app.engine('hbs', hbs.express4({  
+    defaultLayout: __dirname + '/views/layouts/main.hbs',
+    partialsDir: __dirname + '/views/partials',
+    layoutsDir: __dirname + '/views/layouts'
+  }));

@@ -1,20 +1,22 @@
+{{!< adminLayout}}
 {{#each erros}}
 <div class="alert alert-danger">{{texto}}</div>
 {{else}}
 {{/each}}
+
 <ul style="list-style: none; display:inline-flex" class="pal1">
     <li><a class="nav-link"href="/admin">Home</a></li>
     <li><a class="nav-link" href="/admin/imagem">Listar Imagens</a></li>
     <li><a class="nav-link" href="/admin/list">Listar Posts</a></li>
 </ul>
-
+<div class="d-flex justify-content-center mt-5">
 <h2>Cadastrar imagem</h2>
 <form action="/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="file" class="form-control"><br>
     <button type="submit" name="" class="btn btn-success">Upload</button>
 </form>
 
-
+</div>
 <div class="d-flex justify-content-center mt-5">
     <div class="card" style="width: 50rem" ;>
         <div class="card-body">
