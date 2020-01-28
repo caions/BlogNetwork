@@ -5,16 +5,16 @@
 {{/each}}
 
 <ul style="list-style: none; display:inline-flex" class="pal1">
-    <li><a class="nav-link"href="/admin">Home</a></li>
+    <li><a class="nav-link" href="/admin">Home</a></li>
     <li><a class="nav-link" href="/admin/imagem">Listar Imagens</a></li>
     <li><a class="nav-link" href="/admin/list">Listar Posts</a></li>
 </ul>
 <div class="d-flex justify-content-center mt-5">
-<h2>Cadastrar imagem</h2>
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" class="form-control"><br>
-    <button type="submit" name="" class="btn btn-success">Upload</button>
-</form>
+    <h2>Cadastrar imagem</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" class="form-control"><br>
+        <button type="submit" name="" class="btn btn-success">Upload</button>
+    </form>
 
 </div>
 <div class="d-flex justify-content-center mt-5">
@@ -41,15 +41,16 @@
         </form>
     </div>
 </div>
-</div>
+
 
 <script src="/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
         language: 'pt_BR',
         selector: '#article',
+        activeEditor: true,
         plugins: [
-            'advlist link image lists print preview hr searchreplace fullscreen insertdatetime media save table paste emoticons'
+            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
         ]
     });
 </script>
