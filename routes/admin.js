@@ -170,10 +170,14 @@ router.get('/imagem', (req, res) => {
 router.post('/upload', multer(multerConfig).single('file'), (req, res) => {
     var erros = []
 
-    if (!req.file || req.file == undefined || req.file == null) {
+    if (!req.file || req.file == undefined || req.file == null ) {
         erros.push({ texto: "Selecione uma imagem" })
     }
 
+    if (typeof req.fileSizeError != "undefined" ) {
+        erros.push({ texto: "Imagem muito grande tamanho máximo permitido é de 100 kb" })
+    }
+    
     if (erros.length > 0) {
         res.render('pages/formCadPost', { erros: erros })
     } else {
